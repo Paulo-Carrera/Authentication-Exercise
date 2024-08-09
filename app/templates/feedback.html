@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Feedback{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1>Feedback</h1>
+    <hr>
+
+    {% for feedback in feedbacks %}
+
+    
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ feedback.title }}</h5>
+            <p class="card-text">{{ feedback.content }}</p>
+            <p class="card-text"><small class="text-muted">- {{ feedback.username }}</small></p>
+
+            {% if feedback.username == current_user.username %}
+            <a href="{{ url_for('update_feedback', feedback_id=feedback.id) }}" class='btn btn-primary' method="POST">Update</a>
+            <form action="{{ url_for('delete_feedback', feedback_id=feedback.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            {% endif %}
+        
+        </div>
+    </div>
+
+
+    {% endfor %}
+
+    <a href="{{ url_for('add_feedback', username=current_user.username) }}" class = "btn btn-primary">Add Feedback</a>
+    
+{% endblock %}
+
+
+
